@@ -2,14 +2,14 @@ let currentPage = 1;
 let currentHeroes = [];
 
 async function fetchData() {
-    const response = await fetch('/data');
+    const response = await fetch('../data/all.json');
     const data = await response.json();
     return data;
 }
 
 async function displayData(pageNumber = 1, pageSize = 20) {
     const heroes = await fetchData();
-    currentHeroes = heroes; // sauvegarde les héros dans une variable globale
+    currentHeroes = heroes; // sauvegarder les héros dans une variable globale
     updateDisplay(pageNumber, pageSize);
 }
 
