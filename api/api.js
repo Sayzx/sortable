@@ -17,14 +17,14 @@ function updateDisplay(pageNumber = 1, pageSize = 20) {
     const start = (pageNumber - 1) * pageSize;
     const selectedHeroes = currentHeroes.slice(start, start + pageSize);
     let tableHTML = "<table>";
-    tableHTML += "<tr><th>Icon</th><th>Name</th><th>Full Name</th><th>Powerstats</th><th>Race</th><th>Gender</th><th>Birth Place</th><th>Weight</th><th>Alignment</th></tr>";
+    tableHTML += "<tr><th>Image</th><th>Pseudo</th><th>Nom Prenom</th><th>Statisitques</th><th>Race</th><th>Genre</th><th>Lieux de naissance</th><th>Taille</th><th>Alignment</th></tr>";
     selectedHeroes.forEach(hero => {
         tableHTML += `<tr>
             <td><img src="${hero.images.xs}" alt="icon" /></td>
             <td>${hero.name}</td>
             <td>${hero.biography.fullName}</td>
-            <td>Intelligence: ${hero.powerstats.intelligence}, Strength: ${hero.powerstats.strength}</td>
-            <td>${hero.appearance.race || 'Unknown'}</td>
+            <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
+            <td>${hero.appearance.race || 'Unknown'}</td>*
             <td>${hero.appearance.gender}</td>
             <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
             <td>${hero.appearance.weight[1]}</td>
