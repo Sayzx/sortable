@@ -9,7 +9,7 @@ async function fetchData() {
 
 async function displayData(pageNumber = 1, pageSize = 20) {
     const heroes = await fetchData();
-    currentHeroes = heroes; // sauvegarder les héros dans une variable globale
+    currentHeroes = heroes; // sauvegarde les héros dans une variable globale
     updateDisplay(pageNumber, pageSize);
 }
 

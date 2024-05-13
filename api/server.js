@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 
 const server = http.createServer((req, res) => {
-    // Determine the file path
     let filePath = path.join(__dirname, '..', req.url === '/' ? 'web/index.html' : req.url);
     if (req.url.startsWith('/data/')) {
         filePath = path.join(__dirname, '..', req.url);
@@ -31,7 +30,6 @@ const server = http.createServer((req, res) => {
             break;
     }
 
-    // Read File
     fs.readFile(filePath, (error, content) => {
         if (error) {
             if (error.code == 'ENOENT') {
