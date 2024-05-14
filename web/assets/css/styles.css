@@ -30,7 +30,12 @@ img {
     height: 50px;
 }
 
-.search-container, .pagination {
+.search-container {
+    text-align: center;
+    margin: 20px;
+}
+
+#pagination{
     text-align: center;
     margin: 20px;
 }

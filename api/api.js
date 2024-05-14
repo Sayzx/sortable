@@ -59,6 +59,11 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 
 document.getElementById('pageSize').addEventListener('change', (e) => {
     pageSize = e.target.value === 'all' ? filteredHeroes.length : parseInt(e.target.value);
+    if (e.target.value === 'all') {
+        document.getElementById('pagination').style.display = 'none';
+    }else {
+        document.getElementById('pagination').style.display = 'block';
+    }
     currentPage = 1; // remet à 1 la page courante
     updateDisplay();
 });
