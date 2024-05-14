@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
 
     fs.readFile(filePath, (error, content) => {
         if (error) {
-            if (error.code == 'ENOENT') {
+            if (error.code === 'ENOENT') {
                 fs.readFile(path.join(__dirname, 'web/404.html'), (err, content) => {
                     res.writeHead(404, { 'Content-Type': 'text/html' });
                     res.end(content, 'utf-8');
@@ -48,6 +48,8 @@ const server = http.createServer((req, res) => {
     });
 });
 
-server.listen(8080, () => {
-    console.log('Server running on http://localhost:8080');
-});
+server.listen(8080, () => {});
+
+import('open').then(openModule => {
+    openModule.default(`http://localhost:8080`).then();
+})
