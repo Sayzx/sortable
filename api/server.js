@@ -8,7 +8,6 @@ const server = http.createServer((req, res) => {
         filePath = path.join(__dirname, '..', req.url);
     }
 
-    // Adjust file path for assets
     if (req.url.startsWith('/assets/')) {
         filePath = path.join(__dirname, '..', 'web', req.url);
     }
