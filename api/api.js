@@ -24,7 +24,7 @@ function updateDisplay(pageNumber = 1, pageSize = 20) {
             <td>${hero.name}</td>
             <td>${hero.biography.fullName}</td>
             <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
-            <td>${hero.appearance.race || 'Unknown'}</td>*
+            <td>${hero.appearance.race || 'Unknown'}</td>
             <td>${hero.appearance.gender}</td>
             <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
             <td>${hero.appearance.weight[1]}</td>
