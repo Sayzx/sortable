@@ -2,6 +2,7 @@ let currentPage = 1;
 let pageSize = 20;
 let heroes = [];
 let filteredHeroes = [];
+let latestSearchValue = '';
 
 const loadData = (data) => {
     heroes = data;
@@ -41,8 +42,19 @@ function updateDisplay() {
 }
 
 function searchHeroes(query) {
-    filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query.toLowerCase()));
-    currentPage = 1; // remet à 1 la page courante
+    filteredHeroes = heroes.filter(hero =>
+        (hero.name && hero.name.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.biography && hero.biography.fullName && hero.biography.fullName.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.powerstats && hero.powerstats.intelligence !== null && hero.powerstats.intelligence !== undefined && hero.powerstats.intelligence.toString().toLowerCase().includes(query.toLowerCase())) ||
+        (hero.powerstats && hero.powerstats.strength !== null && hero.powerstats.strength !== undefined && hero.powerstats.strength.toString().toLowerCase().includes(query.toLowerCase())) ||
+        (hero.appearance && hero.appearance.race && hero.appearance.race.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.appearance && hero.appearance.gender && hero.appearance.gender.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.biography && hero.biography.placeOfBirth && hero.biography.placeOfBirth.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.appearance && hero.appearance.weight && hero.appearance.weight[1] && hero.appearance.weight[1].toLowerCase().includes(query.toLowerCase())) ||
+        (hero.biography && hero.biography.alignment && hero.biography.alignment.toLowerCase().includes(query.toLowerCase()))
+    );
+
+    currentPage = 1;
     updateDisplay();
 }
 
@@ -54,7 +66,10 @@ function changePage(change) {
 }
 
 document.getElementById('search').addEventListener('keyup', (e) => {
-    searchHeroes(e.target.value);
+    if (latestSearchValue !== e.target.value){
+        latestSearchValue = e.target.value;
+        searchHeroes(e.target.value);
+    }
 });
 
 document.getElementById('pageSize').addEventListener('change', (e) => {
@@ -64,6 +79,6 @@ document.getElementById('pageSize').addEventListener('change', (e) => {
     }else {
         document.getElementById('pagination').style.display = 'block';
     }
-    currentPage = 1; // remet à 1 la page courante
+    currentPage = 1;
     updateDisplay();
 });
