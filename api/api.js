@@ -1,23 +1,27 @@
 let currentPage = 1;
-let currentHeroes = [];
+let pageSize = 20;
+let heroes = [];
+let filteredHeroes = [];
 
-async function fetchData() {
-    const response = await fetch('../data/all.json');
-    const data = await response.json();
-    return data;
-}
+const loadData = (data) => {
+    heroes = data;
+    filteredHeroes = heroes;
+    updateDisplay();
+};
 
-async function displayData(pageNumber = 1, pageSize = 20) {
-    const heroes = await fetchData();
-    currentHeroes = heroes; // sauvegarde les héros dans une variable globale
-    updateDisplay(pageNumber, pageSize);
-}
+// récupère les données depuis l'API
+fetch('https://rawcdn.githack.com/akabab/superhero-api/0.2.0/api/all.json')
+    .then(response => response.json())
+    .then(loadData)
+    .catch(error => console.error('Error fetching data:', error));
 
-function updateDisplay(pageNumber = 1, pageSize = 20) {
-    const start = (pageNumber - 1) * pageSize;
-    const selectedHeroes = currentHeroes.slice(start, start + pageSize);
+function updateDisplay() {
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    const selectedHeroes = filteredHeroes.slice(start, end);
+
     let tableHTML = "<table>";
-    tableHTML += "<tr><th>Image</th><th>Pseudo</th><th>Nom Prenom</th><th>Statisitques</th><th>Race</th><th>Genre</th><th>Lieux de naissance</th><th>Taille</th><th>Alignment</th></tr>";
+    tableHTML += "<tr><th>Icon</th><th>Name</th><th>Full Name</th><th>Powerstats</th><th>Race</th><th>Gender</th><th>Birth Place</th><th>Weight</th><th>Alignment</th></tr>";
     selectedHeroes.forEach(hero => {
         tableHTML += `<tr>
             <td><img src="${hero.images.xs}" alt="icon" /></td>
@@ -33,18 +37,20 @@ function updateDisplay(pageNumber = 1, pageSize = 20) {
     });
     tableHTML += "</table>";
     document.getElementById("data").innerHTML = tableHTML;
+    document.getElementById('pageNumber').innerText = currentPage;
 }
 
 function searchHeroes(query) {
-    const filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query.toLowerCase()));
-    currentHeroes = filteredHeroes;
+    filteredHeroes = heroes.filter(hero => hero.name.toLowerCase().includes(query.toLowerCase()));
+    currentPage = 1; // remet à 1 la page courante
     updateDisplay();
 }
 
 function changePage(change) {
     currentPage += change;
-    updateDisplay(currentPage, document.getElementById('pageSize').value);
-    document.getElementById('pageNumber').innerText = currentPage;
+    if (currentPage < 1) currentPage = 1;
+    if (currentPage > Math.ceil(filteredHeroes.length / pageSize)) currentPage = Math.ceil(filteredHeroes.length / pageSize);
+    updateDisplay();
 }
 
 document.getElementById('search').addEventListener('keyup', (e) => {
@@ -52,7 +58,7 @@ document.getElementById('search').addEventListener('keyup', (e) => {
 });
 
 document.getElementById('pageSize').addEventListener('change', (e) => {
-    updateDisplay(1, e.target.value);
+    pageSize = e.target.value === 'all' ? filteredHeroes.length : parseInt(e.target.value);
+    currentPage = 1; // remet à 1 la page courante
+    updateDisplay();
 });
-
-displayData();
