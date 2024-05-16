@@ -40,7 +40,7 @@ function updateDisplay() {
     selectedHeroes.forEach(hero => {
         tableHTML +=
             `<tr>
-                <td><img src="${hero.images.xs}" alt="icon" /></td>
+            <td><a href="info.html?id=${hero.id}"><img src="${hero.images.xs}" alt="icon" /></a></td>
                 <td>${hero.name}</td>
                 <td>${hero.biography.fullName}</td>
                 <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
