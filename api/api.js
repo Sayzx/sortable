@@ -10,7 +10,6 @@ const loadData = (data) => {
     updateDisplay();
 };
 
-// récupère les données depuis l'API
 fetch('https://rawcdn.githack.com/akabab/superhero-api/0.2.0/api/all.json')
     .then(response => response.json())
     .then(loadData)
@@ -22,21 +21,37 @@ function updateDisplay() {
     const selectedHeroes = filteredHeroes.slice(start, end);
 
     let tableHTML = "<table>";
-    tableHTML += "<tr><th>Icon</th><th>Name</th><th>Full Name</th><th>Powerstats</th><th>Race</th><th>Gender</th><th>Birth Place</th><th>Weight</th><th>Alignment</th></tr>";
-    selectedHeroes.forEach(hero => {
-        tableHTML += `<tr>
-            <td><img src="${hero.images.xs}" alt="icon" /></td>
-            <td>${hero.name}</td>
-            <td>${hero.biography.fullName}</td>
-            <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
-            <td>${hero.appearance.race || 'Unknown'}</td>
-            <td>${hero.appearance.gender}</td>
-            <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
-            <td>${hero.appearance.weight[1]}</td>
-            <td>${hero.biography.alignment}</td>
+
+    tableHTML +=
+        `<tr>
+            <button> <th>Icon</th> </button>
+            <th>Name</th>
+            <th>Full Name</th>
+            <th>Powerstats</th>
+            <th>Race</th>
+            <th>Gender</th>
+            <th>Birth Place</th>
+            <th>Weight</th>
+            <th>Alignment</th>
         </tr>`;
+
+    selectedHeroes.forEach(hero => {
+        tableHTML +=
+            `<tr>
+                <td><img src="${hero.images.xs}" alt="icon" /></td>
+                <td>${hero.name}</td>
+                <td>${hero.biography.fullName}</td>
+                <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
+                <td>${hero.appearance.race || 'Unknown'}</td>
+                <td>${hero.appearance.gender}</td>
+                <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
+                <td>${hero.appearance.weight[1]}</td>
+                <td>${hero.biography.alignment}</td>
+            </tr>`;
     });
+
     tableHTML += "</table>";
+
     document.getElementById("data").innerHTML = tableHTML;
     document.getElementById('pageNumber').innerText = currentPage;
 }
