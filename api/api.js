@@ -3,6 +3,8 @@ let pageSize = 20;
 let heroes = [];
 let filteredHeroes = [];
 let latestSearchValue = '';
+let currentSortColumn = '';
+let currentSortDirection = 'asc';
 
 const loadData = (data) => {
     heroes = data;
@@ -22,25 +24,30 @@ function updateDisplay() {
 
     let tableHTML = "<table>";
 
+    const getArrow = (column) => {
+        if (column === currentSortColumn) {
+            return currentSortDirection === 'asc' ? '▼' : '▲';
+        }
+        return '▲';
+    };
+
     tableHTML +=
         `<tr>
-            <th class="thClickable">Icon</th>
-            <th class="thClickable" id="name">Name <span class="arrow">▲</span> </th>
-            <th class="thClickable" id="fullName">Full Name <span class="arrow">▲</span> </th>
-            <th class="thClickable" id="powerStats">Powerstats <span class="arrow">▲</span> </th>
-            <th class="thClickable" id="race">Race <span class="arrow">▲</span> </th>
-            <th class="thClickable" id="gender">Gender <span class="arrow">▲</span> </th>
-            <th class="thClickable" id="birthPlace">Birth Place <span class="arrow">▲</span> </th>
-            <th class="thClickable" id="weight">Weight <span class="arrow">▲</span> </th>
-            <th class="thClickable" id="alignment">Alignment <span class="arrow">▼</span> </th>
+            <th class="thClickable" onclick="sortTable('icon')">Icon</th>
+            <th class="thClickable" onclick="sortTable('name')">Name <span class="arrow">${getArrow('name')}</span></th>
+            <th class="thClickable" onclick="sortTable('fullName')">Full Name <span class="arrow">${getArrow('fullName')}</span></th>
+            <th class="thClickable" onclick="sortTable('powerStats')">Powerstats <span class="arrow">${getArrow('powerStats')}</span></th>
+            <th class="thClickable" onclick="sortTable('race')">Race <span class="arrow">${getArrow('race')}</span></th>
+            <th class="thClickable" onclick="sortTable('gender')">Gender <span class="arrow">${getArrow('gender')}</span></th>
+            <th class="thClickable" onclick="sortTable('birthPlace')">Birth Place <span class="arrow">${getArrow('birthPlace')}</span></th>
+            <th class="thClickable" onclick="sortTable('weight')">Weight <span class="arrow">${getArrow('weight')}</span></th>
+            <th class="thClickable" onclick="sortTable('alignment')">Alignment <span class="arrow">${getArrow('alignment')}</span></th>
         </tr>`;
-
-    /*▼ ▲*/
 
     selectedHeroes.forEach(hero => {
         tableHTML +=
             `<tr>
-            <td><a href="info.html?id=${hero.id}"><img src="${hero.images.xs}" alt="icon" /></a></td>
+                <td><a href="info.html?id=${hero.id}"><img src="${hero.images.xs}" alt="icon" /></a></td>
                 <td>${hero.name}</td>
                 <td>${hero.biography.fullName}</td>
                 <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
@@ -58,32 +65,66 @@ function updateDisplay() {
     document.getElementById('pageNumber').innerText = currentPage;
 }
 
-function searchHeroes(query) {
-    filteredHeroes = heroes.filter(hero =>
-        (hero.name && hero.name.toLowerCase().includes(query.toLowerCase())) ||
-        (hero.biography && hero.biography.fullName && hero.biography.fullName.toLowerCase().includes(query.toLowerCase())) ||
-        (hero.powerstats && hero.powerstats.intelligence !== null && hero.powerstats.intelligence !== undefined && hero.powerstats.intelligence.toString().toLowerCase().includes(query.toLowerCase())) ||
-        (hero.powerstats && hero.powerstats.strength !== null && hero.powerstats.strength !== undefined && hero.powerstats.strength.toString().toLowerCase().includes(query.toLowerCase())) ||
-        (hero.appearance && hero.appearance.race && hero.appearance.race.toLowerCase().includes(query.toLowerCase())) ||
-        (hero.appearance && hero.appearance.gender && hero.appearance.gender.toLowerCase().includes(query.toLowerCase())) ||
-        (hero.biography && hero.biography.placeOfBirth && hero.biography.placeOfBirth.toLowerCase().includes(query.toLowerCase())) ||
-        (hero.appearance && hero.appearance.weight && hero.appearance.weight[1] && hero.appearance.weight[1].toLowerCase().includes(query.toLowerCase())) ||
-        (hero.biography && hero.biography.alignment && hero.biography.alignment.toLowerCase().includes(query.toLowerCase()))
-    );
+function sortTable(column) {
+    if (currentSortColumn === column) {
+        currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+        currentSortColumn = column;
+        currentSortDirection = 'asc';
+    }
 
-    currentPage = 1;
-    updateDisplay();
-}
+    filteredHeroes.sort((a, b) => {
+        let aValue, bValue;
 
-function changePage(change) {
-    currentPage += change;
-    if (currentPage < 1) currentPage = 1;
-    if (currentPage > Math.ceil(filteredHeroes.length / pageSize)) currentPage = Math.ceil(filteredHeroes.length / pageSize);
+        switch (column) {
+            case 'name':
+                aValue = a.name || '';
+                bValue = b.name || '';
+                break;
+            case 'fullName':
+                aValue = a.biography.fullName || '';
+                bValue = b.biography.fullName || '';
+                break;
+            case 'powerStats':
+                aValue = a.powerstats.intelligence || 0;
+                bValue = b.powerstats.intelligence || 0;
+                break;
+            case 'race':
+                aValue = a.appearance.race || '';
+                bValue = b.appearance.race || '';
+                break;
+            case 'gender':
+                aValue = a.appearance.gender || '';
+                bValue = b.appearance.gender || '';
+                break;
+            case 'birthPlace':
+                aValue = a.biography.placeOfBirth || '';
+                bValue = b.biography.placeOfBirth || '';
+                break;
+            case 'weight':
+                aValue = parseInt(a.appearance.weight[1]) || 0;
+                bValue = parseInt(b.appearance.weight[1]) || 0;
+                break;
+            case 'alignment':
+                aValue = a.biography.alignment || '';
+                bValue = b.biography.alignment || '';
+                break;
+            default:
+                return 0;
+        }
+
+        if (currentSortDirection === 'asc') {
+            return aValue > bValue ? 1 : -1;
+        } else {
+            return aValue < bValue ? 1 : -1;
+        }
+    });
+
     updateDisplay();
 }
 
 document.getElementById('search').addEventListener('keyup', (e) => {
-    if (latestSearchValue !== e.target.value){
+    if (latestSearchValue !== e.target.value) {
         latestSearchValue = e.target.value;
         searchHeroes(e.target.value);
     }
@@ -93,10 +134,9 @@ document.getElementById('pageSize').addEventListener('change', (e) => {
     pageSize = e.target.value === 'all' ? filteredHeroes.length : parseInt(e.target.value);
     if (e.target.value === 'all') {
         document.getElementById('pagination').style.display = 'none';
-    }else {
+    } else {
         document.getElementById('pagination').style.display = 'block';
     }
     currentPage = 1;
     updateDisplay();
 });
-
