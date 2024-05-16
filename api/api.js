@@ -24,16 +24,18 @@ function updateDisplay() {
 
     tableHTML +=
         `<tr>
-            <button> <th>Icon</th> </button>
-            <th>Name</th>
-            <th>Full Name</th>
-            <th>Powerstats</th>
-            <th>Race</th>
-            <th>Gender</th>
-            <th>Birth Place</th>
-            <th>Weight</th>
-            <th>Alignment</th>
+            <th class="thClickable">Icon</th>
+            <th class="thClickable" id="name">Name <span class="arrow">▲</span> </th>
+            <th class="thClickable" id="fullName">Full Name <span class="arrow">▲</span> </th>
+            <th class="thClickable" id="powerStats">Powerstats <span class="arrow">▲</span> </th>
+            <th class="thClickable" id="race">Race <span class="arrow">▲</span> </th>
+            <th class="thClickable" id="gender">Gender <span class="arrow">▲</span> </th>
+            <th class="thClickable" id="birthPlace">Birth Place <span class="arrow">▲</span> </th>
+            <th class="thClickable" id="weight">Weight <span class="arrow">▲</span> </th>
+            <th class="thClickable" id="alignment">Alignment <span class="arrow">▼</span> </th>
         </tr>`;
+
+    /*▼ ▲*/
 
     selectedHeroes.forEach(hero => {
         tableHTML +=
@@ -97,3 +99,4 @@ document.getElementById('pageSize').addEventListener('change', (e) => {
     currentPage = 1;
     updateDisplay();
 });
+

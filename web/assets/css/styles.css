@@ -17,10 +17,7 @@ table {
 th, td {
     text-align: left;
     padding: 10px;
-    border-bottom: px solid #424242;
     border-radius: 1px;
-    /* ajouter une ligne vertical entre chaque catégorie */
- 
 }
 
 th {
@@ -62,8 +59,6 @@ input[type="text"] {
     width: 30%;
 }
 
-
-
 button {
     padding: 10px;
     margin: 10px;
@@ -73,4 +68,15 @@ button {
 
 button:hover {
     background-color: #0f2c4b;
+    cursor: pointer;
+}
+
+.thClickable:hover {
+    cursor: pointer;
+    background-color: #7992af;
+}
+
+.arrow {
+    font-size: 15px;
+    color: darkgrey
 }
