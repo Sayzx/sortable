@@ -28,34 +28,42 @@ function updateDisplay() {
         if (column === currentSortColumn) {
             return currentSortDirection === 'asc' ? '▼' : '▲';
         }
-        return '▲';
+        return '';
     };
 
     tableHTML +=
         `<tr>
-            <th class="thClickable" onclick="sortTable('icon')">Icon</th>
-            <th class="thClickable" onclick="sortTable('name')">Name <span class="arrow">${getArrow('name')}</span></th>
-            <th class="thClickable" onclick="sortTable('fullName')">Full Name <span class="arrow">${getArrow('fullName')}</span></th>
-            <th class="thClickable" onclick="sortTable('powerStats')">Powerstats <span class="arrow">${getArrow('powerStats')}</span></th>
-            <th class="thClickable" onclick="sortTable('race')">Race <span class="arrow">${getArrow('race')}</span></th>
-            <th class="thClickable" onclick="sortTable('gender')">Gender <span class="arrow">${getArrow('gender')}</span></th>
-            <th class="thClickable" onclick="sortTable('birthPlace')">Birth Place <span class="arrow">${getArrow('birthPlace')}</span></th>
-            <th class="thClickable" onclick="sortTable('weight')">Weight <span class="arrow">${getArrow('weight')}</span></th>
-            <th class="thClickable" onclick="sortTable('alignment')">Alignment <span class="arrow">${getArrow('alignment')}</span></th>
+            <th id="icon">Icon</th>
+            <th class="thClickable" id="name" onclick="sortTable('name')">Name <span class="arrow">${getArrow('name')}</span></th>
+            <th class="thClickable" id="fullName" onclick="sortTable('fullName')">Full Name <span class="arrow">${getArrow('fullName')}</span></th>
+            <th class="thClickable" id="powerStats" onclick="sortTable('powerStats')">Powerstats <span class="arrow">${getArrow('powerStats')}</span></th>
+            <th class="thClickable" id="race" onclick="sortTable('race')">Race <span class="arrow">${getArrow('race')}</span></th>
+            <th class="thClickable" id="gender" onclick="sortTable('gender')">Gender <span class="arrow">${getArrow('gender')}</span></th>
+            <th class="thClickable" id="birthPlace" onclick="sortTable('birthPlace')">Birth Place <span class="arrow">${getArrow('birthPlace')}</span></th>
+            <th class="thClickable" id="weight" onclick="sortTable('weight')">Weight <span class="arrow">${getArrow('weight')}</span></th>
+            <th class="thClickable" id="alignment" onclick="sortTable('alignment')">Alignment <span class="arrow">${getArrow('alignment')}</span></th>
         </tr>`;
 
     selectedHeroes.forEach(hero => {
         tableHTML +=
             `<tr>
                 <td><a href="info.html?id=${hero.id}"><img src="${hero.images.xs}" alt="icon" /></a></td>
-                <td>${hero.name}</td>
-                <td>${hero.biography.fullName}</td>
-                <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
+                <td>${hero.name || 'Unknown'}</td>
+                <td>${hero.biography.fullName || 'Unknown'}</td>
+                <td>
+                    🧠 : ${hero.powerstats.intelligence || 'Unknown'},
+                    💪 : ${hero.powerstats.strength || 'Unknown'},
+                    🏃 :${hero.powerstats.speed || 'Unknown'},
+                    <br>
+                    🛡️ :${hero.powerstats.durability || 'Unknown'},
+                    ⚡ :${hero.powerstats.power || 'Unknown'},
+                    🗡️:${hero.powerstats.combat || 'Unknown'}
+                </td>
                 <td>${hero.appearance.race || 'Unknown'}</td>
-                <td>${hero.appearance.gender}</td>
+                <td>${hero.appearance.gender || 'Unknown'}</td>
                 <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
-                <td>${hero.appearance.weight[1]}</td>
-                <td>${hero.biography.alignment}</td>
+                <td>${hero.appearance.weight[1] || 'Unknown'}</td>
+                <td>${hero.biography.alignment || 'Unknown'}</td>
             </tr>`;
     });
 
@@ -63,6 +71,23 @@ function updateDisplay() {
 
     document.getElementById("data").innerHTML = tableHTML;
     document.getElementById('pageNumber').innerText = currentPage;
+}
+
+function searchHeroes(query) {
+    filteredHeroes = heroes.filter(hero =>
+        (hero.name && hero.name.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.biography && hero.biography.fullName && hero.biography.fullName.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.powerstats && hero.powerstats.intelligence !== null && hero.powerstats.intelligence !== undefined && hero.powerstats.intelligence.toString().toLowerCase().includes(query.toLowerCase())) ||
+        (hero.powerstats && hero.powerstats.strength !== null && hero.powerstats.strength !== undefined && hero.powerstats.strength.toString().toLowerCase().includes(query.toLowerCase())) ||
+        (hero.appearance && hero.appearance.race && hero.appearance.race.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.appearance && hero.appearance.gender && hero.appearance.gender.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.biography && hero.biography.placeOfBirth && hero.biography.placeOfBirth.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.appearance && hero.appearance.weight && hero.appearance.weight[1] && hero.appearance.weight[1].toLowerCase().includes(query.toLowerCase())) ||
+        (hero.biography && hero.biography.alignment && hero.biography.alignment.toLowerCase().includes(query.toLowerCase()))
+    );
+
+    currentPage = 1;
+    updateDisplay();
 }
 
 function sortTable(column) {
@@ -140,3 +165,10 @@ document.getElementById('pageSize').addEventListener('change', (e) => {
     currentPage = 1;
     updateDisplay();
 });
+
+function changePage(change) {
+    currentPage += change;
+    if (currentPage < 1) currentPage = 1;
+    if (currentPage > Math.ceil(filteredHeroes.length / pageSize)) currentPage = Math.ceil(filteredHeroes.length / pageSize);
+    updateDisplay();
+}

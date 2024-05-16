@@ -11,14 +11,20 @@ body {
 table {
     width: 100%;
     margin-top: 20px;
+    table-layout: fixed;
     border-collapse: collapse;
     text-align: center;
 }
 
 th, td {
-    text-align: left;
+    text-align: center;
     padding: 10px;
     border-radius: 1px;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
 }
 
 th {
@@ -28,8 +34,49 @@ th {
     text-align: center;
 }
 
+tr {
+    border-bottom: 2px solid #2480aa;
+
+}
+
 tr:hover {
     background-color: #dccccc;
+}
+
+#weight {
+    width: 4%;
+}
+
+#alignment {
+    width: 5%;
+}
+
+#gender {
+    width: 4%;
+}
+
+#birthPlace {
+    width: 8%;
+}
+
+#icon{
+    width: 3%;
+}
+
+#race {
+    width: 6%;
+}
+
+#name {
+    width: 7%;
+}
+
+#powerStats {
+    width: 10%;
+}
+
+#fullName {
+    width: 9%;
 }
 
 img {
