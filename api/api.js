@@ -37,18 +37,18 @@ document.addEventListener('DOMContentLoaded', function() {
         </tr>`;
 
         selectedHeroes.forEach(hero => {
-            tableHTML +=
-                `<tr>
-                <td><img src="${hero.images.xs}" alt="icon" /></td>
-                <td>${hero.name}</td>
-                <td>${hero.biography.fullName}</td>
-                <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
-                <td>${hero.appearance.race || 'Unknown'}</td>
-                <td>${hero.appearance.gender}</td>
-                <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
-                <td>${hero.appearance.weight[1]}</td>
-                <td>${hero.biography.alignment}</td>
-            </tr>`;
+            tableHTML += `
+                <tr>
+                    <td><a href="info.html?id=${hero.id}"><img src="${hero.images.xs}" alt="icon" /></a></td>
+                    <td>${hero.name}</td>
+                    <td>${hero.biography.fullName}</td>
+                    <td>🧠: ${hero.powerstats.intelligence}, 🗡️: ${hero.powerstats.strength}</td>
+                    <td>${hero.appearance.race || 'Unknown'}</td>
+                    <td>${hero.appearance.gender}</td>
+                    <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
+                    <td>${hero.appearance.weight[1]}</td>
+                    <td>${hero.biography.alignment}</td>
+                </tr>`;
         });
 
         tableHTML += "</table>";
