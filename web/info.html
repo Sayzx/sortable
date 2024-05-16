@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
+
 <head>
+    <title>Hero Info</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hero Info</title>
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
+
 <body>
+
     <h1>Hero Information</h1>
-    <div id="hero-info">
-        <!-- Hero information will be displayed here -->
-    </div>
+    <div id="hero-info"></div>
+
     <script>
-        // Function to get query parameters
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        // Fetch and display hero information
         document.addEventListener('DOMContentLoaded', () => {
             const heroId = getQueryParam('id');
             if (heroId) {
@@ -40,5 +40,7 @@
             }
         });
     </script>
+
 </body>
+
 </html>
