@@ -26,7 +26,7 @@ function updateDisplay() {
 
     const getArrow = (column) => {
         if (column === currentSortColumn) {
-            return currentSortDirection === 'asc' ? '▼' : '▲';
+            return currentSortDirection === 'asc' ? '▲' : '▼';
         }
         return '';
     };
@@ -61,11 +61,11 @@ function updateDisplay() {
                     🗡️:${hero.powerstats.combat || 'Unknown'}
                 </td>
                 <td>${hero.appearance.race || 'Unknown'}</td>
-                <td>${hero.appearance.gender || 'Unknown'}</td>
-                <td>${hero.appearance.height[1] || 'Unknown'}</td>
-                <td>${hero.appearance.weight[1] || 'Unknown'}</td>
-                <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
-                <td>${hero.biography.alignment || 'Unknown'}</td>
+                <td>${hero.appearance.gender === '-' ? 'Unknown' : hero.appearance.gender}</td>
+                <td>${hero.appearance.height[1] === '0 cm' ? 'Unknown' : hero.appearance.height[1]}</td>
+                <td>${hero.appearance.weight[1] === '0 kg' ? 'Unknown' : hero.appearance.weight[1]}</td>
+                <td>${hero.biography.placeOfBirth === '-' ? 'Unknown' : hero.biography.placeOfBirth}</td>
+                <td>${hero.biography.alignment === '-' ? 'Unknown' : hero.biography.alignment}</td>
             </tr>`;
     });
 
@@ -106,54 +106,72 @@ function sortTable(column) {
 
         switch (column) {
             case 'name':
-                aValue = a.name || '';
-                bValue = b.name || '';
+                aValue = a.name || 'Unknown';
+                bValue = b.name || 'Unknown';
                 break;
             case 'fullName':
-                aValue = a.biography.fullName || '';
-                bValue = b.biography.fullName || '';
+                aValue = a.biography.fullName || 'Unknown';
+                bValue = b.biography.fullName || 'Unknown';
                 break;
             case 'powerStats':
-                aValue = a.powerstats.intelligence || 0;
-                bValue = b.powerstats.intelligence || 0;
+                aValue = a.powerstats.intelligence || 'Unknown';
+                bValue = b.powerstats.intelligence || 'Unknown';
                 break;
             case 'race':
-                aValue = a.appearance.race || '';
-                bValue = b.appearance.race || '';
+                aValue = a.appearance.race || 'Unknown';
+                bValue = b.appearance.race || 'Unknown';
                 break;
             case 'gender':
-                aValue = a.appearance.gender || '';
-                bValue = b.appearance.gender || '';
+                aValue = (a.appearance.gender && a.appearance.gender !== '-') ? a.appearance.gender : 'Unknown';
+                bValue = (b.appearance.gender && b.appearance.gender !== '-') ? b.appearance.gender : 'Unknown';
                 break;
             case 'height':
-                aValue = parseInt(a.appearance.height[1]) || 0;
-                bValue = parseInt(b.appearance.height[1]) || 0;
+                aValue = (a.appearance.height[1] !== '0 cm') ? a.appearance.height[1] : 'Unknown';
+                bValue = (b.appearance.height[1] !== '0 cm') ? b.appearance.height[1] : 'Unknown';
                 break;
             case 'weight':
-                aValue = parseInt(a.appearance.weight[1]) || 0;
-                bValue = parseInt(b.appearance.weight[1]) || 0;
+                aValue = (a.appearance.weight[1] !== '0 kg') ? a.appearance.weight[1] : 'Unknown';
+                bValue = (b.appearance.weight[1] !== '0 kg') ? b.appearance.weight[1] : 'Unknown';
                 break;
             case 'birthPlace':
-                aValue = a.biography.placeOfBirth || '';
-                bValue = b.biography.placeOfBirth || '';
+                aValue = a.biography.placeOfBirth !== '-' ? a.biography.placeOfBirth : 'Unknown';
+                bValue = b.biography.placeOfBirth !== '-' ? b.biography.placeOfBirth : 'Unknown';
                 break;
             case 'alignment':
-                aValue = a.biography.alignment || '';
-                bValue = b.biography.alignment || '';
+                aValue = (a.biography.alignment && a.biography.alignment !== '-') ? a.biography.alignment : 'Unknown';
+                bValue = (b.biography.alignment && b.biography.alignment !== '-') ? b.biography.alignment : 'Unknown';
                 break;
-            default:
-                return 0;
         }
 
-        if (currentSortDirection === 'asc') {
-            return aValue > bValue ? 1 : -1;
+        if (aValue === "Unknown" && bValue !== "Unknown") {
+            return 1;
+        } else if (bValue === "Unknown" && aValue !== "Unknown") {
+            return -1;
+        } else if (aValue === "Unknown" && bValue === "Unknown") {
+            return 0;
         } else {
-            return aValue < bValue ? 1 : -1;
+            if (currentSortDirection === 'asc') {
+                return aValue > bValue ? 1 : -1;
+            } else {
+                return aValue < bValue ? 1 : -1;
+            }
         }
     });
 
     updateDisplay();
 }
+
+function changePage(change) {
+    currentPage += change;
+    if (currentPage < 1) currentPage = 1;
+    if (currentPage > Math.ceil(filteredHeroes.length / pageSize)) currentPage = Math.ceil(filteredHeroes.length / pageSize);
+    updateDisplay();
+}
+
+
+
+
+
 
 document.getElementById('search').addEventListener('keyup', (e) => {
     if (latestSearchValue !== e.target.value) {
@@ -172,10 +190,3 @@ document.getElementById('pageSize').addEventListener('change', (e) => {
     currentPage = 1;
     updateDisplay();
 });
-
-function changePage(change) {
-    currentPage += change;
-    if (currentPage < 1) currentPage = 1;
-    if (currentPage > Math.ceil(filteredHeroes.length / pageSize)) currentPage = Math.ceil(filteredHeroes.length / pageSize);
-    updateDisplay();
-}

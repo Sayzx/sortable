@@ -4,18 +4,18 @@ const path = require('path');
 
 const server = http.createServer((req, res) => {
 
-    let filePath = path.join(__dirname, '..', req.url === '/' ? 'web/index.html' : req.url);
+    const urlPath = req.url.split('?')[0];
 
-    if (req.url.startsWith("/info")) {
+    let filePath = path.join(__dirname, '..', urlPath === '/' ? 'web/index.html' : 'web' + urlPath);
+
+    if (urlPath.startsWith("/info")) {
         filePath = path.join(__dirname, '../web/info.html');
-    }
-
-    if (req.url.startsWith('/data/')) {
+    }else if (req.url.startsWith('/data/')) {
         filePath = path.join(__dirname, '..', req.url);
-    }
-
-    if (req.url.startsWith('/assets/')) {
+    }else if (req.url.startsWith('/assets/')) {
         filePath = path.join(__dirname, '..', 'web', req.url);
+    }else if (req.url.startsWith('/api/')) {
+        filePath = path.join(__dirname, '..', req.url);
     }
 
     const extname = path.extname(filePath);
@@ -27,19 +27,6 @@ const server = http.createServer((req, res) => {
             break;
         case '.css':
             contentType = 'text/css';
-            break;
-        case '.json':
-            contentType = 'application/json';
-            break;
-        case '.png':
-            contentType = 'image/png';
-            break;
-        case '.jpg':
-        case '.jpeg':
-            contentType = 'image/jpeg';
-            break;
-        default:
-            contentType = 'text/html';
             break;
     }
 
@@ -63,6 +50,7 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(8080, () => {});
+
 import('open').then(openModule => {
     openModule.default(`http://localhost:8080`).then();
 })
