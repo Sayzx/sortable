@@ -59,4 +59,4 @@ Pour démarrer le projet Superhero Data Platform, assurez-vous d'avoir Node.js i
 
 - [@nicolasgouy](https://www.github.com/gonicolas12)
 - [@sayzx](https://github.com/Sayzx)
-- [@xplit495](hhttps://github.com/Xplit495)
+- [@xplit495](https://github.com/Xplit495)
