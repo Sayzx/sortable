@@ -64,6 +64,5 @@ body {
 }
 
 #group {
-    /* si text trop long, on revient à la ligne */
     white-space: normal;
 }

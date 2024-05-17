@@ -1,8 +1,12 @@
+
+
+// i get id on url link beacuse hero id is on link page
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
 
+// On page load i get api and i take the all information of the hero by id
 document.addEventListener('DOMContentLoaded', () => {
     const heroId = getQueryParam('id');
     if (heroId) {
