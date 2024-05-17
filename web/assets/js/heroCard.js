@@ -30,6 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p><strong>Weight:</strong> ${hero.appearance.weight.join(' / ')}</p>
                     <p><strong>Birth Place:</strong> ${hero.biography.placeOfBirth || 'Unknown'}</p>
                     <p><strong>Alignment:</strong> ${hero.biography.alignment}</p>
+                    <p><strong>Occupation:</strong> ${hero.work.occupation}</p>
+                    <p><strong>Base:</strong> ${hero.work.base}</p>
+                    <p><strong>Group Affiliation:</strong> ${hero.connections.groupAffiliation}</p>
+                    <p><strong>Relatives:</strong> ${hero.connections.relatives}</p>
+
+                    <h3>Biography</h3>
+                    <p>${hero.biography.publisher}</p>
+                    <p>${hero.biography.firstAppearance}</p>
                 </div>
             `;
                 } else {
