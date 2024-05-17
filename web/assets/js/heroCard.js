@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="hero-card">
                     <img src="${hero.images.sm}" alt="${hero.name}" class="hero-image">
                     <h2>${hero.name}</h2>
+                    <p><strong>Slug:</strong> ${hero.slug}</p>
                     <p><strong>Power Stats:</strong>
                      🧠 ${hero.powerstats.intelligence}, 
                      💪 ${hero.powerstats.strength}, 
@@ -27,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
                      🗡️ ${hero.powerstats.combat}</p>
 
                     <h3>Appearance</h3>
-                    <p><strong>Race:</strong> ${hero.appearance.race || 'Unknown'}</p>
                     <p><strong>Gender:</strong> ${hero.appearance.gender}</p>
+                    <p><strong>Race:</strong> ${hero.appearance.race || 'Unknown'}</p>
                     <p><strong>Height:</strong> ${hero.appearance.height.join(' / ')}</p>
                     <p><strong>Weight:</strong> ${hero.appearance.weight.join(' / ')}</p>
                     <p><strong>Eye Color:</strong> ${hero.appearance.eyeColor}</p>
