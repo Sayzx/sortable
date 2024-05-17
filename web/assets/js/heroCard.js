@@ -1,5 +1,3 @@
-
-
 // i get id on url link beacuse hero id is on link page
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
