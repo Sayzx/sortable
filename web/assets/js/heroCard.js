@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
                      🗡️ ${hero.powerstats.combat}</p>
                     <p><strong>Race:</strong> ${hero.appearance.race || 'Unknown'}</p>
                     <p><strong>Gender:</strong> ${hero.appearance.gender}</p>
-                    <p><strong>Birth Place:</strong> ${hero.biography.placeOfBirth || 'Unknown'}</p>
-                    <p><strong>Weight:</strong> ${hero.appearance.weight.join(' / ')}</p>
-                    <p><strong>Alignment:</strong> ${hero.biography.alignment}</p>
                     <p><strong>Height:</strong> ${hero.appearance.height.join(' / ')}</p>
+                    <p><strong>Weight:</strong> ${hero.appearance.weight.join(' / ')}</p>
+                    <p><strong>Birth Place:</strong> ${hero.biography.placeOfBirth || 'Unknown'}</p>
+                    <p><strong>Alignment:</strong> ${hero.biography.alignment}</p>
                 </div>
             `;
                 } else {
