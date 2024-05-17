@@ -1,10 +1,8 @@
-// i get id on url link beacuse hero id is on link page
 function getQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(param);
 }
 
-// On page load i get api and i take the all information of the hero by id
 document.addEventListener('DOMContentLoaded', () => {
     const heroId = getQueryParam('id');
     if (heroId) {
@@ -54,13 +52,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
                 } else {
-                    document.getElementById('hero-info').innerText = 'Hero not found.';
+                    window.location.href = 'http://localhost:8080/t-essaye-de-faire-quoi-la-enzo-une-fois-mais-pas-2';
                 }
             })
             .catch(error => {
                 console.error('Error fetching hero data:', error);
             });
     } else {
-        document.getElementById('hero-info').innerText = 'No hero ID provided in the URL.';
+        window.location.href = 'http://localhost:8080/t-essaye-de-faire-quoi-la-enzo-une-fois-mais-pas-2';
     }
 });

@@ -1,62 +1,68 @@
+# Appendix
+
+Your web browser should automatically open the application, if it doesn't, open this link : http://localhost:8080.
+
 # Superhero Data Platform
 
-Le projet Superhero Data Platform est une application web destinée à fournir des informations détaillées sur divers super-héros, permettant aux utilisateurs d'accéder à des données complètes et de les trier selon différents critères.
+## About
 
-## Technologies
+The Superhero Data Platform project is a web application designed to provide detailed information on various superheroes, allowing users to access comprehensive data and sort it according to different criteria.
 
-### Front-End
+## Table of Contents
 
-- **HTML**: Pour la structure des pages.
-- **CSS**: Pour le style des pages.
-- **JavaScript**: Pour les fonctionnalités dynamiques et l'interaction avec l'API.
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Dependencies](#dependencies)
+- [Authors](#authors)
+- [License](#license)
 
-### Back-End
+## Installation
 
-- **Node.js**: Utilisé pour gérer le serveur et les fichiers statiques.
-- **HTTP Server**: Utilisé pour servir les pages web et les ressources associées.
+Follow these instructions to install the project on your local machine. This is intended for developers wishing to test and use the project.
 
-## Fonctionnalités
+```bash
+git clone https://github.com/Sayzx/sortable.git
+cd sortable
+```
 
-- **Recherche de Héros**: Permet aux utilisateurs de rechercher des super-héros par nom ou par attributs spécifiques.
-- **Tri Dynamique**: Les utilisateurs peuvent trier les héros selon différents attributs comme le nom, la force, l'intelligence, etc.
-- **Pagination**: Support de la pagination pour naviguer à travers les listes de héros.
-- **Détails des Héros**: Chaque héros peut être exploré en détail dans une page dédiée qui affiche toutes les informations relatives.
+## Usage
 
-## Lancement du Projet
+After installation, navigate into root folder and here's how you can start using the project:
 
-Pour démarrer le projet Superhero Data Platform, assurez-vous d'avoir Node.js installé sur votre machine. Suivez ces étapes pour installer et lancer le projet :
+```bash
+node .\api\server.js
+```
 
-### Prérequis
+## Features
 
-- Node.js installé sur votre machine.
-- Accès à un terminal ou une invite de commande.
+The project includes the following features:
 
-### Installation et Exécution
+- **Five Different View**: You can list heroes by 10, 20, 50, 100, All (and the process is fast).
+- **Dynamic Search Bar**: The list is updated every time you press a key.
+- **Sort By Column**: You can sort the list by any column, in ascending or descending order.
+- **Pagination**: You can navigate through the list using the pagination buttons.
+- **Detailed Hero Information**: You can view detailed information about each hero in a separate page (just click on his picture).
+- **Dynamic Url Research**: Every time you select ascending or descending order, the url is updated and you can paste it to someone else to show the same list.
 
-1. **Cloner le dépôt** avec la commande suivante :
+## Dependencies
 
-   ```bash
-   git clone https://github.com/Sayzx/sortable.git
-   cd sortable
-   ```
+- HTML / CSS / JavaScript
+- Node.js
 
-2. **Installer les dépendances** avec la commande suivante :
+## Authors
 
-   ```bash
-   npm install
-   ```
+**Carrola Quentin,**
+**Gouy Nicolas,**
+**Dehais Aylan**
 
-3. **Lancer le serveur** avec la commande suivante :
+**Github**
 
-   ```bash
-   node api/server.js
-   ```
+- [@Xplit495](https://github.com/Xplit495)
+- [@Nicolasgouy](https://www.github.com/gonicolas12)
+- [@Sayzx](https://github.com/Sayzx)
 
-4. **L'accès à l'application** devrait être automatique, ouvrez ce lien si ce n'est pas le cas -> http://localhost:8080.
+## License
 
-
-### Auteurs :
-
-- [@nicolasgouy](https://www.github.com/gonicolas12)
-- [@sayzx](https://github.com/Sayzx)
-- [@xplit495](https://github.com/Xplit495)
+This project is licensed under the MIT License. For more details,
+see the [LICENSE](LICENSE) file included in this repository.

@@ -1,3 +1,4 @@
+const params = new URLSearchParams(window.location.search);
 let currentPage = 1;
 let pageSize = 20;
 let heroes = [];
@@ -5,13 +6,6 @@ let filteredHeroes = [];
 let latestSearchValue = '';
 let currentSortColumn = '';
 let currentSortDirection = 'asc';
-
-const loadData = (data) => {
-    heroes = convertHeightToCm(data);
-    heroes = convertWeightToKg(heroes);
-    filteredHeroes = heroes;
-    updateDisplay();
-};
 
 const convertHeightToCm = (heroes) => {
     return heroes.map(hero => {
@@ -43,17 +37,10 @@ const convertWeightToKg = (heroes) => {
     });
 };
 
-fetch('https://rawcdn.githack.com/akabab/superhero-api/0.2.0/api/all.json')
-    .then(response => response.json())
-    .then(loadData)
-    .catch(error => console.error('Error fetching data:', error));
-
 function updateDisplay() {
     const start = (currentPage - 1) * pageSize;
     const end = start + pageSize;
     const selectedHeroes = filteredHeroes.slice(start, end);
-
-    let tableHTML = "<table>";
 
     const getArrow = (column) => {
         if (column === currentSortColumn) {
@@ -61,6 +48,8 @@ function updateDisplay() {
         }
         return '';
     };
+
+    let tableHTML = "<table>";
 
     tableHTML +=
         `<tr>
@@ -124,12 +113,15 @@ function searchHeroes(query) {
     updateDisplay();
 }
 
-function sortTable(column) {
-    if (currentSortColumn === column) {
-        currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-        currentSortColumn = column;
-        currentSortDirection = 'asc';
+function sortTable(column, isInitialLoad = false) {
+    if (!isInitialLoad) {
+        if (currentSortColumn === column) {
+            currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSortColumn = column;
+            currentSortDirection = 'asc';
+        }
+        updateURL(column, currentSortDirection);
     }
 
     filteredHeroes.sort((a, b) => {
@@ -207,10 +199,31 @@ function changePage(change) {
     updateDisplay();
 }
 
+function updateURL(column, direction) {
+    const newUrl = `${window.location.pathname}?sort=${column}&direction=${direction}`;
+    window.history.pushState({ path: newUrl }, '', newUrl);
+}
 
-
-
-
+function loadFromURL() {
+    console.log('loadFromURL');
+    console.log(heroes);
+    const column = params.get('sort');
+    const direction = params.get('direction');
+    console.log(column);
+    console.log(direction);
+    if (column !== 'name' && column !== 'fullName' && column !== 'powerStats' && column !== 'race' && column !== 'gender'
+        && column !== 'height' && column !== 'weight' && column !== 'birthPlace' && column !== 'alignment' && column !== null) {
+        window.location.href = 'http://localhost:8080/t-essaye-de-faire-quoi-la-enzo-une-fois-mais-pas-2'
+    }
+    if (direction !== 'asc' && direction !== 'desc' && direction !== null) {
+        window.location.href = 'http://localhost:8080/t-essaye-de-faire-quoi-la-enzo-une-fois-mais-pas-2'
+    }
+    if (column && direction) {
+        currentSortColumn = column;
+        currentSortDirection = direction;
+        sortTable(column, true);
+    }
+}
 
 document.getElementById('search').addEventListener('keyup', (e) => {
     if (latestSearchValue !== e.target.value) {
@@ -229,3 +242,18 @@ document.getElementById('pageSize').addEventListener('change', (e) => {
     currentPage = 1;
     updateDisplay();
 });
+
+const loadData = (data) => {
+    heroes = convertHeightToCm(data);
+    heroes = convertWeightToKg(heroes);
+    filteredHeroes = heroes;
+    if (params){
+        loadFromURL();
+    }
+    updateDisplay();
+};
+
+fetch('https://rawcdn.githack.com/akabab/superhero-api/0.2.0/api/all.json')
+    .then(response => response.json())
+    .then(loadData)
+    .catch(error => console.error('Error fetching data:', error));
