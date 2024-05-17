@@ -14,7 +14,7 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     padding: 20px;
     margin: 20px auto;
-    max-width: 800px;
+    max-width: 900px;
     text-align: center;
 }
 
@@ -26,6 +26,7 @@ body {
 .hero-image {
     display: block;
     height: auto;
+    width: 15%;
     border-radius: 10%;
     margin: 10px auto;
 }
@@ -60,4 +61,9 @@ body {
     cursor: pointer;
     text-decoration: none;
     color: #2480aa;
+}
+
+#group {
+    /* si text trop long, on revient à la ligne */
+    white-space: normal;
 }
