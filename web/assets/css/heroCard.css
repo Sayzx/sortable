@@ -3,13 +3,13 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f4f4f4;
+    background: #d1cfcf;
     font-weight: 500;
     white-space: nowrap;
 }
 
 .hero-card {
-    background-color: white;
+    background-color: rgb(224, 223, 223);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     padding: 20px;
@@ -19,11 +19,21 @@ body {
     margin-top: 140px;
 }
 
+.hero-card:hover {
+    box-shadow: 0 0 50px rgba(0,0,0,0.2);
+    transition: box-shadow 0.2s;
+}
+
 .hero-image {
     display: block;
     height: auto;
-    border-radius: 50%;
+    border-radius: 10%;
     margin: 10px auto;
+}
+
+.hero-image:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s;
 }
 
 .hero-card h2 {
