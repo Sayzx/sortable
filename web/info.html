@@ -5,41 +5,12 @@
     <title>Hero Info</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/heroCard.css">
 </head>
 
 <body>
-
-    <h1>Hero Information</h1>
     <div id="hero-info"></div>
-
-    <script>
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const heroId = getQueryParam('id');
-            if (heroId) {
-                fetch(`../api/heroes/${heroId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const heroInfoDiv = document.getElementById('hero-info');
-                        heroInfoDiv.innerHTML = `
-                            <h2>${data.name}</h2>
-                            <p><strong>Superpower:</strong> ${data.superpower}</p>
-                            <p><strong>Description:</strong> ${data.description}</p>
-                        `;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching hero data:', error);
-                    });
-            } else {
-                document.getElementById('hero-info').innerText = 'No hero ID provided in the URL.';
-            }
-        });
-    </script>
+    <script src="assets/js/heroCard.js"></script>
 
 </body>
 
