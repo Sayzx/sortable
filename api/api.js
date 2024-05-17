@@ -7,9 +7,40 @@ let currentSortColumn = '';
 let currentSortDirection = 'asc';
 
 const loadData = (data) => {
-    heroes = data;
+    heroes = convertHeightToCm(data);
+    heroes = convertWeightToKg(heroes);
     filteredHeroes = heroes;
     updateDisplay();
+};
+
+const convertHeightToCm = (heroes) => {
+    return heroes.map(hero => {
+        if (hero.appearance && hero.appearance.height) {
+            hero.appearance.height = hero.appearance.height.map(h => {
+                if (h.includes("meters")) {
+                    let heightInMeters = parseFloat(h.split(' ')[0]);
+                    return `${heightInMeters * 100} cm`;
+                }
+                return h;
+            });
+        }
+        return hero;
+    });
+};
+
+const convertWeightToKg = (heroes) => {
+    return heroes.map(hero => {
+        if (hero.appearance && hero.appearance.weight) {
+            hero.appearance.weight = hero.appearance.weight.map(w => {
+                if (w.toLowerCase().includes("tons")) {
+                    let weightInTons = parseFloat(w.replace(',', '').split(' ')[0]);
+                    return `${weightInTons * 1000} kg`;
+                }
+                return w;
+            });
+        }
+        return hero;
+    });
 };
 
 fetch('https://rawcdn.githack.com/akabab/superhero-api/0.2.0/api/all.json')
@@ -151,9 +182,17 @@ function sortTable(column) {
             return 0;
         } else {
             if (currentSortDirection === 'asc') {
-                return aValue > bValue ? 1 : -1;
-            } else {
-                return aValue < bValue ? 1 : -1;
+                if (currentSortColumn === 'height' || currentSortColumn === 'weight') {
+                    return parseInt(aValue) > parseInt(bValue) ? 1 : -1;
+                }else {
+                    return aValue > bValue ? 1 : -1;
+                }
+            }else {
+                if (currentSortColumn === 'height' || currentSortColumn === 'weight') {
+                    return parseInt(aValue) < parseInt(bValue) ? 1 : -1;
+                }else {
+                    return aValue < bValue ? 1 : -1;
+                }
             }
         }
     });
