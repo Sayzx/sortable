@@ -39,8 +39,9 @@ function updateDisplay() {
             <th class="thClickable" id="powerStats" onclick="sortTable('powerStats')">Powerstats <span class="arrow">${getArrow('powerStats')}</span></th>
             <th class="thClickable" id="race" onclick="sortTable('race')">Race <span class="arrow">${getArrow('race')}</span></th>
             <th class="thClickable" id="gender" onclick="sortTable('gender')">Gender <span class="arrow">${getArrow('gender')}</span></th>
-            <th class="thClickable" id="birthPlace" onclick="sortTable('birthPlace')">Birth Place <span class="arrow">${getArrow('birthPlace')}</span></th>
+            <th class="thClickable" id="height" onclick="sortTable('height')">Height <span class="arrow">${getArrow('height')}</span></th>
             <th class="thClickable" id="weight" onclick="sortTable('weight')">Weight <span class="arrow">${getArrow('weight')}</span></th>
+            <th class="thClickable" id="birthPlace" onclick="sortTable('birthPlace')">Birth Place <span class="arrow">${getArrow('birthPlace')}</span></th>
             <th class="thClickable" id="alignment" onclick="sortTable('alignment')">Alignment <span class="arrow">${getArrow('alignment')}</span></th>
         </tr>`;
 
@@ -61,8 +62,9 @@ function updateDisplay() {
                 </td>
                 <td>${hero.appearance.race || 'Unknown'}</td>
                 <td>${hero.appearance.gender || 'Unknown'}</td>
-                <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
+                <td>${hero.appearance.height[1] || 'Unknown'}</td>
                 <td>${hero.appearance.weight[1] || 'Unknown'}</td>
+                <td>${hero.biography.placeOfBirth || 'Unknown'}</td>
                 <td>${hero.biography.alignment || 'Unknown'}</td>
             </tr>`;
     });
@@ -81,8 +83,9 @@ function searchHeroes(query) {
         (hero.powerstats && hero.powerstats.strength !== null && hero.powerstats.strength !== undefined && hero.powerstats.strength.toString().toLowerCase().includes(query.toLowerCase())) ||
         (hero.appearance && hero.appearance.race && hero.appearance.race.toLowerCase().includes(query.toLowerCase())) ||
         (hero.appearance && hero.appearance.gender && hero.appearance.gender.toLowerCase().includes(query.toLowerCase())) ||
-        (hero.biography && hero.biography.placeOfBirth && hero.biography.placeOfBirth.toLowerCase().includes(query.toLowerCase())) ||
+        (hero.appearance && hero.appearance.height && hero.appearance.height[1] && hero.appearance.height[1].toLowerCase().includes(query.toLowerCase())) ||
         (hero.appearance && hero.appearance.weight && hero.appearance.weight[1] && hero.appearance.weight[1].toLowerCase().includes(query.toLowerCase())) ||
+        (hero.biography && hero.biography.placeOfBirth && hero.biography.placeOfBirth.toLowerCase().includes(query.toLowerCase())) ||
         (hero.biography && hero.biography.alignment && hero.biography.alignment.toLowerCase().includes(query.toLowerCase()))
     );
 
@@ -122,13 +125,17 @@ function sortTable(column) {
                 aValue = a.appearance.gender || '';
                 bValue = b.appearance.gender || '';
                 break;
-            case 'birthPlace':
-                aValue = a.biography.placeOfBirth || '';
-                bValue = b.biography.placeOfBirth || '';
+            case 'height':
+                aValue = parseInt(a.appearance.height[1]) || 0;
+                bValue = parseInt(b.appearance.height[1]) || 0;
                 break;
             case 'weight':
                 aValue = parseInt(a.appearance.weight[1]) || 0;
                 bValue = parseInt(b.appearance.weight[1]) || 0;
+                break;
+            case 'birthPlace':
+                aValue = a.biography.placeOfBirth || '';
+                bValue = b.biography.placeOfBirth || '';
                 break;
             case 'alignment':
                 aValue = a.biography.alignment || '';

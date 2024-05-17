@@ -21,11 +21,14 @@ th, td {
     padding: 10px;
     border-radius: 1px;
     word-wrap: break-word;
-    word-break: break-all;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    vertical-align: top;
+    word-break: break-word;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    vertical-align: middle;
+    border: 2px solid #aaa6a6;
 }
+
 
 th {
     background-color: #2480aa;
@@ -36,31 +39,22 @@ th {
 
 tr {
     border-bottom: 2px solid #2480aa;
-
 }
 
 tr:hover {
     background-color: #dccccc;
 }
 
-#weight {
+#icon{
+    width: 3%;
+}
+
+#weight, #gender, #height  {
     width: 4%;
 }
 
 #alignment {
     width: 5%;
-}
-
-#gender {
-    width: 4%;
-}
-
-#birthPlace {
-    width: 8%;
-}
-
-#icon{
-    width: 3%;
 }
 
 #race {
@@ -71,12 +65,16 @@ tr:hover {
     width: 7%;
 }
 
-#powerStats {
-    width: 10%;
+#birthPlace {
+    width: 8%;
 }
 
 #fullName {
     width: 9%;
+}
+
+#powerStats {
+    width: 10%;
 }
 
 img {
