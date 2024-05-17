@@ -24,11 +24,18 @@ Follow these instructions to install the project on your local machine. This is 
 ```bash
 git clone https://github.com/Sayzx/sortable.git
 cd sortable
+npm install
 ```
 
 ## Usage
 
 After installation, navigate into root folder and here's how you can start using the project:
+
+```bash
+npm start
+```
+
+Or:
 
 ```bash
 node .\api\server.js

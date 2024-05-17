@@ -1,17 +1,45 @@
 {
-  "name": "raid-2",
+  "name": "sortable",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "The Superhero Data Platform project is a web application designed to provide detailed information on various superheroes, allowing users to access comprehensive data and sort it according to different criteria.",
+  "main": "/api/server.js",
+  "dependencies": {
+    "bundle-name": "^4.1.0",
+    "default-browser": "^5.2.1",
+    "default-browser-id": "^5.0.0",
+    "define-lazy-prop": "^3.0.0",
+    "is-docker": "^3.0.0",
+    "is-inside-container": "^1.0.0",
+    "is-wsl": "^3.1.0",
+    "open": "^10.1.0",
+    "run-applescript": "^7.0.0"
+  },
+  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node api/server.js",
+    "test": "echo \"No test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Sayzx/sortable.git"
+    "url": "git+https://github.com/Sayzx/sortable.git"
   },
-  "private": true,
-  "dependencies": {
-    "open": "^10.1.0"
-  }
+  "keywords": [
+    "sortable",
+    "heroes",
+    "superheroes",
+    "ytrack",
+    "ynov",
+    "js",
+    "javascript",
+    "node",
+    "node.js",
+    "html",
+    "css"
+  ],
+  "author": "Xplit495, Sayzx, Nicolasgouy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sayzx/sortable/issues"
+  },
+  "homepage": "https://github.com/Sayzx/sortable#readme"
 }
